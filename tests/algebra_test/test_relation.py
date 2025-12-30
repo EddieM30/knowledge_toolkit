@@ -1,3 +1,4 @@
+import random
 from src.algebra.relation import Relation
 
 
@@ -141,28 +142,57 @@ def test_range_shadow_checking():
 
 def test_relation_origin_case():
     """Test Relation behavior at the origin (0, 0) case."""
-    # (0, 0)
-    pass
+    pairs = [(0, 0)]
+    rel = Relation(pairs)
+
+    assert len(rel.pairs) == 1
+    assert (0, 0) in rel.pairs
+
+    assert rel.domain == {0}
+    assert rel.range == {0}
 
 
 def test_relation_negative_values():
     """Test Relation behavior with negative values in pairs."""
-    pass
+    pairs = [(-1, -5), (-4, -6)]
+    rel = Relation(pairs)
+
+    assert (-1, -5) in rel.pairs
+    assert (-4, -6) in rel.pairs
+
+    assert rel.domain == {-1, -4}
+    assert rel.range == {-5, -6}
 
 
 def test_relation_vertical_line_test():
     """Test if Relation passes the vertical line test (functionality check)."""
-    pass
+    pairs = [(1, 3), (1, 4), (1, 5), (1, 6)]
+    rel = Relation(pairs)
+
+    assert len(rel.domain) == 1
+    assert rel.domain == {1}
 
 
 def test_relation_horizontal_line_test():
     """Test if Relation passes the horizontal line test (output uniqueness)."""
-    pass
+    pairs = [(1, 10), (2, 10), (3, 10), (4, 10)]
+    rel = Relation(pairs)
+
+    assert len(rel.range) == 1
+    assert rel.range == {10}
 
 
 def test_relation_large_data_sets_100_plus():
     """Test Relation performance and correctness with 100+ pairs."""
-    pass
+    functional_pairs = [(x, x**2) for x in range(500)]
+    duplicate_pairs = functional_pairs[:250]
+    large_test_data = functional_pairs + duplicate_pairs
+    rel = Relation(large_test_data)
+
+    assert len(rel.pairs) == 500
+
+    assert len(rel.domain) == 500
+    assert len(rel.range) == 500
 
 
 def test_inverse_relation():
