@@ -197,9 +197,39 @@ def test_relation_large_data_sets_100_plus():
 
 def test_inverse_relation():
     """Test the computation and properties of the inverse of a Relation."""
-    pass
+    pairs = [(1, 3), (2, 4), (3, 5), (4, 6)]
+    rel = Relation(pairs)
+
+    assert rel.inverse.inverse.pairs == rel.pairs
+    assert rel.inverse.pairs == {(3, 1), (4, 2), (5, 3), (6, 4)}
 
 
-def test_relation_function_verification():
+def test_relation_is_function():
     """Test if the Relation represents a valid mathematical function."""
-    pass
+    functional_pairs = [(x, x**2) for x in range(100)]
+    rel1 = Relation(functional_pairs)
+
+    assert rel1.is_function is True
+    assert len(rel1.domain) == len(rel1.pairs)
+
+
+def test_relation_is_not_function():
+    failure_pairs = [(1, x) for x in range(100, 350)]
+    rel2 = Relation(failure_pairs)
+
+    assert rel2.is_function is not True
+    assert len(rel2.domain) != len(rel2.pairs)
+
+
+def test_inverse_relation_is_function():
+    pairs = [(1, 3), (2, 4), (3, 5), (4, 6)]
+    rel = Relation(pairs)
+
+    assert rel.inverse.is_function == True
+
+
+def test_inverse_relation_is_not_function():
+    pairs = [(1, 4), (2, 4), (3, 5), (4, 6)]
+    rel = Relation(pairs)
+
+    assert rel.inverse.is_function is not True
