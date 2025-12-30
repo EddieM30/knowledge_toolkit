@@ -2,6 +2,7 @@ from src.algebra.relation import Relation
 
 
 def test_relation_ignores_duplicates():
+    """Test that Relation ignores duplicate pairs and only stores unique ones."""
     # Instantiate Relation
     pairs = [(1, 3), (2, 4), (1, 5), (1, 3)]
     rel = Relation(pairs)
@@ -14,6 +15,7 @@ def test_relation_ignores_duplicates():
 
 
 def test_relation_empty_input():
+    """Test that Relation with empty input results in an empty set of pairs."""
     pairs = []
     rel = Relation(pairs)
 
@@ -21,6 +23,7 @@ def test_relation_empty_input():
 
 
 def test_relation_type_flexibility():
+    """Test that Relation can handle pairs with various data types."""
     pairs = [('a', 2 + 4), (3.14159, 4.44), (600, 'v')]
     rel = Relation(pairs)
 
@@ -31,6 +34,7 @@ def test_relation_type_flexibility():
 
 
 def test_relation_integrity():
+    """Test that Relation maintains integrity after input list is cleared."""
     pairs = [('a', 'b'), ('a', 'f'), ('l', 'v')]
     rel = Relation(pairs)
 
@@ -43,6 +47,7 @@ def test_relation_integrity():
 
 
 def test_domain_unique_inputs_only():
+    """Test that the domain contains only unique input elements from pairs."""
     # Instantiate Relation
     pairs = [(1, 3), (2, 4), (1, 5), (1, 3)]
     rel = Relation(pairs)
@@ -53,6 +58,7 @@ def test_domain_unique_inputs_only():
 
 
 def test_domain_element_isolation():
+    """Test that the domain contains only the first elements of each pair."""
     pairs = [(1, 2), (3, 4), (5, 6)]
     domain = Relation(pairs).domain
 
@@ -67,6 +73,7 @@ def test_domain_element_isolation():
 
 
 def test_domain_data_type_consistency():
+    """Test that the domain preserves the data types of input elements."""
     pairs = [(1, 2 + 4), (1.44, 'The man walked down the street')]
     domain = Relation(pairs).domain
 
@@ -77,6 +84,7 @@ def test_domain_data_type_consistency():
 
 
 def test_domain_order_independence():
+    """Test that the domain is independent of the order of input pairs."""
     pairs = [(1, 10), (2, 20), (3, 50)]
     more_pairs = [(3, 50), (2, 20), (1, 10)]
 
@@ -90,6 +98,7 @@ def test_domain_order_independence():
 
 
 def test_range_unique_outputs_only():
+    """Test that the range contains only unique output elements from pairs."""
     pairs = [(1, 3), (2, 4), (1, 5), (1, 3)]
     rnge = Relation(pairs).range
 
@@ -98,6 +107,7 @@ def test_range_unique_outputs_only():
 
 
 def test_range_element_isolation():
+    """Test that the range contains only the second elements of each pair."""
     pairs = [(1, 3), (2, 4), (1, 5), (1, 3)]
     rnge = Relation(pairs).range
 
@@ -108,6 +118,7 @@ def test_range_element_isolation():
 
 
 def test_range_empty_relation():
+    """Test that the range of an empty Relation is an empty set."""
     pairs = []
     rnge = Relation(pairs).range
 
@@ -116,6 +127,7 @@ def test_range_empty_relation():
 
 
 def test_range_shadow_checking():
+    """Test that unrelated variables do not affect the Relation's range."""
     pairs = [(1, 3), (2, 4), (1, 5), (1, 3)]
     rnge = Relation(pairs).range
 
@@ -128,29 +140,36 @@ def test_range_shadow_checking():
 
 
 def test_relation_origin_case():
+    """Test Relation behavior at the origin (0, 0) case."""
     # (0, 0)
     pass
 
 
 def test_relation_negative_values():
+    """Test Relation behavior with negative values in pairs."""
     pass
 
 
 def test_relation_vertical_line_test():
+    """Test if Relation passes the vertical line test (functionality check)."""
     pass
 
 
 def test_relation_horizontal_line_test():
+    """Test if Relation passes the horizontal line test (output uniqueness)."""
     pass
 
 
 def test_relation_large_data_sets_100_plus():
+    """Test Relation performance and correctness with 100+ pairs."""
     pass
 
 
 def test_inverse_relation():
+    """Test the computation and properties of the inverse of a Relation."""
     pass
 
 
 def test_relation_function_verification():
+    """Test if the Relation represents a valid mathematical function."""
     pass
