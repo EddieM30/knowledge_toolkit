@@ -1,0 +1,58 @@
+# math_from_scratch
+
+A living Python module for building math intuition and mastery — from precalculus fundamentals to advanced undergraduate computer science topics.  
+This project is my personal math lab: a place to implement, test, and truly understand concepts by building them from scratch.
+
+## 🎯 Vision
+
+- **Grow with me:** This repo will expand as I progress, from high school math through a BS in Computer Science and beyond.
+- **Hands-on learning:** Every function, structure, and test is written to reinforce understanding and retention.
+- **Breadth and depth:** Topics will range from algebra, relations, and functions to calculus, discrete math, linear algebra, probability, and more.
+
+## 🚀 Getting Started
+
+1. Clone the repo:
+   ```bash
+   git clone <repo-url>
+   ```
+2. Set up a virtual environment:
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\activate  # On Windows
+   ```
+3. Install dev dependencies:
+   ```bash
+   pip install -r requirements-dev.txt  # or: pip install pytest
+   ```
+
+## 🧪 Running Tests
+
+```bash
+pytest
+```
+
+## 📚 Example Usage
+
+```python
+from src.algebra.relation import Relation
+
+r = Relation([(1, 2), (2, 3), (1, 2)])
+print(r.pairs)   # set of unique pairs
+print(r.domain)  # set of unique inputs
+print(r.range)   # set of unique outputs
+```
+
+## 🛠️ Contributing
+
+- Open issues for ideas, bugs, or requests.
+- Add focused unit tests for new features or behaviors.
+- Keep commits small, descriptive, and educational.
+
+## 📝 License
+
+Add a license of your choice (e.g., MIT). Replace this line with your preferred license.
+
+---
+
+**This project is a journey — not just a codebase.**  
+If you’re learning math or CS, feel free to fork, watch, or contribute!
