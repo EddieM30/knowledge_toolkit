@@ -7,6 +7,13 @@ class Relation:
     def __init__(self, pairs=None):
         self.pairs = set(pairs) if pairs else set()
 
+    def get_value_for(self, x_input):
+        for x, y in self.pairs:
+            if x == x_input:
+                return y
+        raise ValueError(
+            f"Value {x_input} not found in the domain of this relation")
+
     @property
     def domain(self):
         """Returns unique x values in set, ignores duplicates"""

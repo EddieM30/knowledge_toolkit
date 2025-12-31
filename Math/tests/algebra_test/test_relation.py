@@ -1,5 +1,5 @@
 import random
-from src.algebra.relation import Relation
+from Math.src.algebra.relation import Relation
 
 
 def test_relation_ignores_duplicates():
@@ -233,3 +233,11 @@ def test_inverse_relation_is_not_function():
     rel = Relation(pairs)
 
     assert rel.inverse.is_function is not True
+
+
+def test_relation_get_value_for_is_found():
+    pairs = [(1, 4), (2, 4), (3, 5), (4, 6)]
+    rel = Relation(pairs)
+
+    assert rel.get_value_for(2) == 4
+    assert rel.get_value_for(3) == 5
