@@ -150,19 +150,13 @@ class Function:
 
     def check_symmetry(self):
         """
-        Check and print whether the function is even, odd, or neither.
+        Check and set self._symmerty_type whether the function is even, odd, or neither.
         Compares f(x) to f(-x) and -f(x) for all x in the domain.
         """
-        even_count = 0
-        odd_count = 0
-        for x in self.relation.domain:
-            if self(x) == self.reflect_over_y_axis()(x):
-                even_count += 1
-            if self.reflect_over_y_axis()(x) == -self(x):
-                odd_count += 1
-        if even_count == len(self.relation.domain):
+
+        if all(self(x) == self.reflect_over_y_axis()(x) for x in self.relation.domain):
             self._symmetry_type = 'even'
-        elif odd_count == len(self.relation.domain):
+        elif all(self.reflect_over_y_axis()(x) == -self(x) for x in self.relation.domain):
             self._symmetry_type = 'odd'
         else:
             self._symmetry_type = 'neither'
