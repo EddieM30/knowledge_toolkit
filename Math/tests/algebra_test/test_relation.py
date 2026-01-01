@@ -1,5 +1,5 @@
 import random
-from Math.src.algebra.relation import Relation
+from Math.core.relation import Relation
 
 
 def test_relation_ignores_duplicates():

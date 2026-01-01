@@ -1,6 +1,6 @@
 
-from Math.src.algebra.functions import Function
-from Math.src.algebra.relation import Relation
+from Math.core.functions import Function
+from Math.core.relation import Relation
 
 functional_rel = Relation([(x, x**2) for x in range(10)])
 non_function_rel = Relation([(1, 2), (2, 3), (1, 5)])

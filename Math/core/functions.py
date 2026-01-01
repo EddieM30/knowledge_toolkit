@@ -1,4 +1,4 @@
-from Math.src.algebra.relation import Relation
+from .relation import Relation
 
 
 class Function:
@@ -22,7 +22,6 @@ class Function:
 
     def compose(self, other):
         """Return the composition of this function with another function (not implemented)."""
-        pass
 
     def func_arithmetic(self, operand, g):
         """Perform arithmetic operation with another function g (not implemented)."""
