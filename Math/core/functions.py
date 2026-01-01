@@ -137,7 +137,7 @@ class Function:
         Returns:
             Function: The function reflected over the x-axis ($f(x) \to -f(x)$).
         """
-        return Function(relation=self.relation, rule=lambda x: self(x) * -1)
+        return Function(relation=self.relation, rule=lambda x: -self(x))
 
     def reflect_over_y_axis(self):
         """
@@ -146,7 +146,7 @@ class Function:
         Returns:
             Function: The function reflected over the y-axis ($f(x) \to f(-x)$).
         """
-        return Function(relation=self.relation, rule=lambda x: self(x * -1))
+        return Function(relation=self.relation, rule=lambda x: self(-x))
 
     def check_symmetry(self):
         """
