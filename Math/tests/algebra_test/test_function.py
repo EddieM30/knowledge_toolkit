@@ -72,5 +72,25 @@ def test_compose_constant():
     assert h(9) == 7
 
 
-def test_vertical_shift():
-    pass
+def test_check_symmetry_is_even():
+    f = Function(relation=Relation(
+        [(x, x**2) for x in range(-5, 6)]), rule=lambda x: x**2)
+    f.check_symmetry()
+
+    assert f.return_symmetry_type == 'even'
+
+
+def test_check_symmetry_is_odd():
+    f = Function(relation=Relation(
+        [(x, x**3) for x in range(-5, 6)]), rule=lambda x: x**3)
+    f.check_symmetry()
+
+    assert f.return_symmetry_type == 'odd'
+
+
+def test_check_symmetry_is_neither():
+    f = Function(relation=Relation(
+        [(x, x + 1) for x in range(-5, 6)]), rule=lambda x: x + 1)
+    f.check_symmetry()
+
+    assert f.return_symmetry_type == 'neither'

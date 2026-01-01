@@ -33,6 +33,10 @@ class Function:
             return self.rule(x)
         return self.relation.get_value_from(x)
 
+    @property
+    def return_symmetry_type(self):
+        return self._symmetry_type
+
     @staticmethod
     def identity(range_start=0, range_end=1):
         """
@@ -157,11 +161,11 @@ class Function:
             if self.reflect_over_y_axis()(x) == -self(x):
                 odd_count += 1
         if even_count == len(self.relation.domain):
-            print("even")
+            self._symmetry_type = 'even'
         elif odd_count == len(self.relation.domain):
-            print('odd')
+            self._symmetry_type = 'odd'
         else:
-            print('neither')
+            self._symmetry_type = 'neither'
 
     def intervals_of_increase(self):
         """
