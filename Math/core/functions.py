@@ -21,7 +21,9 @@ class Function:
         return self.relation.get_value_from(x)
 
     def compose(self, other):
-        """Return the composition of this function with another function (not implemented)."""
+        """Return the composition of this function with another function """
+        def h(x): return self(other(x))
+        return Function(relation=self.relation, rule=h)
 
     def func_arithmetic(self, operand, g):
         """Perform arithmetic operation with another function g (not implemented)."""
