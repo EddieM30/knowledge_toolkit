@@ -20,6 +20,14 @@ class Function:
             return self.rule(x)
         return self.relation.get_value_from(x)
 
+    @staticmethod
+    def identity(range_start=0, range_end=1):
+        return Function(relation=Relation([(x, x) for x in range(range_start, range_end)]), rule=lambda x: x)
+
+    @staticmethod
+    def constant(c=0, range_start=0, range_end=1):
+        return Function(relation=Relation([(x, c) for x in range(range_start, range_end)]), rule=lambda x: c)
+
     def compose(self, other):
         """Return the composition of this function with another function """
         def h(x): return self(other(x))
@@ -31,28 +39,27 @@ class Function:
 
     def vertical_shift(self, k):
         """Return a new Function shifted vertically by k units."""
-        def new_rule(x): return self(x) + k
-        return Function(relation=self.relation, rule=new_rule)
+        return Function(relation=self.relation, rule=lambda x: self(x) + k)
 
     def horizontal_shift(self, h):
         """Return a new Function shifted horizontally by h units (not implemented)."""
-        pass
+        return Function(relation=self.relation, rule=lambda x: self(x - h))
 
     def vertical_stretch(self, a):
         """Return a new Function stretched vertically by a factor of a (not implemented)."""
-        pass
+        return Function(relation=self.relation, rule=lambda x: self(x) * a)
 
     def horizontal_stretch(self, b):
         """Return a new Function stretched horizontally by a factor of b (not implemented)."""
-        pass
+        return Function(relation=self.relation, rule=lambda x: self(x * b))
 
     def reflect_over_x_axis(self):
         """Return a new Function reflected over the x-axis (not implemented)."""
-        pass
+        return Function(relation=self.relation, rule=lambda x: self(x) * -1)
 
     def reflect_over_y_axis(self):
         """Return a new Function reflected over the y-axis (not implemented)."""
-        pass
+        return Function(relation=self.relation, rule=lambda x: self(x * -1))
 
     def is_even(self):
         """Check if the function is even (not implemented)."""
