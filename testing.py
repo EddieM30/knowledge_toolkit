@@ -1,10 +1,12 @@
-from src.algebra.functions import Function
-from src.algebra.relation import Relation
+from Math.core.functions import Function
+from Math.core.relation import Relation
 
 
-pairs = [(1, 4), (2, 4), (3, 5), (4, 6)]
-rel = Relation(pairs)
-f = Function(relation=rel, rule=lambda x: 2 * (x + 3 * 3 * 3))
+f_even = Function(relation=Relation([(x, x**2)
+                                     for x in range(-5, 6)]), rule=lambda x: x**2)
 
-g = f.shift_vertical(5)
-print(g(2))
+f_odd = Function(relation=Relation([(x, x**3)
+                                    for x in range(-5, 6)]), rule=lambda x: x**3)
+
+f_even.check_symmetry()
+f_odd.check_symmetry()
