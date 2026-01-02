@@ -1,8 +1,8 @@
-
+import pytest
 from Math.core.functions import Function
 from Math.core.relation import Relation
 
-functional_rel = Relation([(x, x**2) for x in range(10)])
+functional_rel = Relation([(x, x**2) for x in range(-5, 6)])
 non_function_rel = Relation([(1, 2), (2, 3), (1, 5)])
 
 
@@ -12,8 +12,8 @@ def test_is_function_on_instantiation():
     is recognized as a function (passes the vertical line test).
     """
 
-    func = Function(functional_rel)
-    assert func.relation.is_function is True
+    func = Function(pairs=functional_rel.pairs)
+    assert func.is_function is True
 
 
 def test_is_not_function_on_instantiation():
@@ -21,24 +21,26 @@ def test_is_not_function_on_instantiation():
         Test that a Function instantiated with a non-functional Relation
         is not recognized as a function (fails the vertical line test).
         """
-    func = Function(non_function_rel)
-    assert func.relation.is_function is False
+
+    with pytest.raises(ValueError) as excinfo:
+        Function(pairs=non_function_rel.pairs)
+    assert "Relation is not a function" in str(excinfo.value)
 
 
 def test_rule_evaluation():
     """
         Test that a Function with a rule evaluates correctly for given inputs.
         """
-    f = Function(relation=functional_rel, rule=lambda x: x**2)
+    f = Function(pairs=functional_rel.pairs, rule=lambda x: x**2)
 
     assert f(4) == 16
     assert f(5) == 25
 
 
 def test_compose():
-    f = Function(relation=Relation([(x, x**2)
+    f = Function(pairs=([(x, x**2)
                  for x in range(-5, 6)]), rule=lambda x: x**2)
-    g = Function(relation=Relation([(x, x + 1)
+    g = Function(pairs=([(x, x + 1)
                  for x in range(-5, 6)]), rule=lambda x: x + 1)
 
     h = f.compose(g)
@@ -49,7 +51,7 @@ def test_compose():
 
 
 def test_compose_with_self():
-    f = Function(relation=Relation([(x, x - 3)
+    f = Function(pairs=([(x, x - 3)
                  for x in range(-5, 6)]), rule=lambda x: x - 3)
 
     h = f.compose(f)
@@ -61,7 +63,7 @@ def test_compose_with_self():
 
 def test_compose_identity():
     i = Function.identity(-5, 6)
-    f = Function(relation=Relation([(x, x**2)
+    f = Function(pairs=([(x, x**2)
                  for x in range(-5, 6)]), rule=lambda x: x**2)
     h = f.compose(i)  # h = f(i(x))
 
@@ -75,7 +77,7 @@ def test_compose_identity():
 def test_compose_constant():
     f = Function.constant(7)
 
-    g = Function(relation=Relation([(x, x**3)
+    g = Function(pairs=([(x, x**3)
                  for x in range(-5, 6)]), rule=lambda x: x**3)
     h = f.compose(g)
 
@@ -84,7 +86,7 @@ def test_compose_constant():
 
 
 def test_check_symmetry_is_even():
-    f = Function(relation=Relation(
+    f = Function(pairs=(
         [(x, x**2) for x in range(-5, 6)]), rule=lambda x: x**2)
     f.check_symmetry()
 
@@ -92,7 +94,7 @@ def test_check_symmetry_is_even():
 
 
 def test_check_symmetry_is_odd():
-    f = Function(relation=Relation(
+    f = Function(pairs=(
         [(x, x**3) for x in range(-5, 6)]), rule=lambda x: x**3)
     f.check_symmetry()
 
@@ -100,7 +102,7 @@ def test_check_symmetry_is_odd():
 
 
 def test_check_symmetry_is_neither():
-    f = Function(relation=Relation(
+    f = Function(pairs=(
         [(x, x + 1) for x in range(-5, 6)]), rule=lambda x: x + 1)
     f.check_symmetry()
 

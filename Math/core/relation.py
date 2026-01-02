@@ -55,7 +55,7 @@ class Relation:
         return {pair[1] for pair in self.pairs}
 
     @property
-    def inverse(self) -> object:
+    def inverse(self) -> "Relation":
         """Returns new instance of class Relation with inversed pairs"""
         return Relation([pair[::-1] for pair in self.pairs])
 

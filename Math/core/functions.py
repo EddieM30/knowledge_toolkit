@@ -14,10 +14,10 @@ from typing import Optional, Callable, Any
 from .relation import Relation
 
 
-class Function:
+class Function(Relation):
     """Represents a mathematical function, built on a Relation, with optional transformation rules and analysis methods."""
 
-    def __init__(self, relation: Relation, rule: Optional[Callable] = None):
+    def __init__(self, pairs=None, rule: Optional[Callable] = None):
         """
         Initialize a Function object.
 
@@ -25,10 +25,10 @@ class Function:
             relation (Relation): The underlying relation representing the function.
             rule (callable, optional): A callable rule for evaluating the function. Defaults to None.
         """
-        if not relation.is_function:
+        super().__init__(pairs)
+        if not self.is_function:
             raise ValueError("Relation is not a function")
 
-        self.relation = relation
         self.rule = rule
         self._symmetry_type = None
         self._intervals_of_increase = None
@@ -46,7 +46,7 @@ class Function:
         """
         if self.rule:
             return self.rule(x)
-        return self.relation.get_value_for(x)
+        return self.get_value_for(x)
 
     @property
     def return_symmetry_type(self):
@@ -64,7 +64,7 @@ class Function:
         Returns:
             Function: The identity function.
         """
-        return Function(relation=Relation([(x, x) for x in range(range_start, range_end)]), rule=lambda x: x)
+        return Function(pairs=([(x, x) for x in range(range_start, range_end)]), rule=lambda x: x)
 
     @staticmethod
     def constant(c=0, range_start=0, range_end=1):
@@ -78,7 +78,7 @@ class Function:
         Returns:
             Function: The constant function.
         """
-        return Function(relation=Relation([(x, c) for x in range(range_start, range_end)]), rule=lambda x: c)
+        return Function(pairs=([(x, c) for x in range(range_start, range_end)]), rule=lambda x: c)
 
     def compose(self, other):
         """Return the composition of this function with another function.
@@ -87,7 +87,7 @@ class Function:
             other (Function): The inner function to compose with.
         Returns:
             Function: The composed function f(g(x))."""
-        return Function(relation=self.relation, rule=lambda x: self(other(x)))
+        return Function(pairs=self.pairs, rule=lambda x: self(other(x)))
 
     def func_arithmetic(self, operand, g):
         """
@@ -107,7 +107,7 @@ class Function:
         Returns:
             Function: The vertically shifted function.
         """
-        return Function(relation=self.relation, rule=lambda x: self(x) + k)
+        return Function(pairs=self.pairs, rule=lambda x: self(x) + k)
 
     def horizontal_shift(self, h):
         """
@@ -118,7 +118,7 @@ class Function:
         Returns:
             Function: The horizontally shifted function.
         """
-        return Function(relation=self.relation, rule=lambda x: self(x - h))
+        return Function(pairs=self.pairs, rule=lambda x: self(x - h))
 
     def vertical_stretch(self, a):
         """
@@ -129,7 +129,7 @@ class Function:
         Returns:
             Function: The vertically stretched function.
         """
-        return Function(relation=self.relation, rule=lambda x: self(x) * a)
+        return Function(pairs=self.pairs, rule=lambda x: self(x) * a)
 
     def horizontal_stretch(self, b):
         """
@@ -140,7 +140,7 @@ class Function:
         Returns:
             Function: The horizontally stretched function.
         """
-        return Function(relation=self.relation, rule=lambda x: self(x * b))
+        return Function(pairs=self.pairs, rule=lambda x: self(x * b))
 
     def reflect_over_x_axis(self) -> 'Function':
         """
@@ -149,7 +149,7 @@ class Function:
         Returns:
             Function: The function reflected over the x-axis ($f(x) \to -f(x)$).
         """
-        return Function(relation=self.relation, rule=lambda x: -self(x))
+        return Function(pairs=self.pairs, rule=lambda x: -self(x))
 
     def reflect_over_y_axis(self) -> "Function":
         """
@@ -158,7 +158,7 @@ class Function:
         Returns:
             Function: The function reflected over the y-axis ($f(x) \to f(-x)$).
         """
-        return Function(relation=self.relation, rule=lambda x: self(-x))
+        return Function(pairs=self.pairs, rule=lambda x: self(-x))
 
     def check_symmetry(self) -> None:
         """
@@ -166,9 +166,9 @@ class Function:
         Compares f(x) to f(-x) and -f(x) for all x in the domain.
         """
 
-        if all(self(x) == self.reflect_over_y_axis()(x) for x in self.relation.domain):
+        if all(self(x) == self.reflect_over_y_axis()(x) for x in self.domain):
             self._symmetry_type = 'even'
-        elif all(self.reflect_over_y_axis()(x) == -self(x) for x in self.relation.domain):
+        elif all(self.reflect_over_y_axis()(x) == -self(x) for x in self.domain):
             self._symmetry_type = 'odd'
         else:
             self._symmetry_type = 'neither'
