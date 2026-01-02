@@ -1,24 +1,39 @@
-# math_from_scratch
+# knowledge_toolkit
 
-A living Python module for building math intuition and mastery — from precalculus fundamentals to advanced undergraduate computer science topics.  
-This project is my personal math lab: a place to implement, test, and truly understand concepts by building them from scratch.
+An ever growing, living Python module for deeply understanding college-level concepts - starting with mathematics and expanding into computer science, physics, biology and beyond.
+
+Starting with mathematics (precalculus → algebra → calculus → linear algebra → discrete math → probability), this repository will expand to include:
+
+- Computer Science (algorithms, data structures, systems, AI)
+- Pysics & Astrophysics
+- Cosmology
+- Biology & Chemistry
+- History, Philosophy, Economics
+- ...and whatever else sparks curiosity
+
+Every concept gets implemented from first principles to reinforce intuition and build lasting mastery.
+
+This is my living implementation journal: theorems proven, algorithms built, models simulated — all in code.
 
 ## 🎯 Vision
 
-- **Grow with me:** This repo will expand as I progress, from high school math through a BS in Computer Science and beyond.
-- **Hands-on learning:** Every function, structure, and test is written to reinforce understanding and retention.
-- **Breadth and depth:** Topics will range from algebra, relations, and functions to calculus, discrete math, linear algebra, probability, and more.
+- **Learn by building:** True understanding comes from implementation, not just reading.
+- **One toolkit to rule them all:** A unified, evolving codebase that connects idea across disciplines.
+- **From scratch, always:** Favor clarity and fidelity to fundamentals over external libraries.
+- **Journey over perfection:** Code will be refactored, concepts revisited, understanding deepened - commits tell the story. 
 
 ## 🚀 Getting Started
 
 1. Clone the repo:
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/EddieM30/knowledge_toolkit.git
+   cd knowledge_toolkit
    ```
 2. Set up a virtual environment:
    ```bash
    python -m venv .venv
-   .venv\Scripts\activate  # On Windows
+   # .venv\Scripts\activate  # On Windows
+   source .venv/bin/activate # macOS/Linux
    ```
 3. Install dev dependencies:
    ```bash
@@ -27,32 +42,80 @@ This project is my personal math lab: a place to implement, test, and truly unde
 
 ## 🧪 Running Tests
 
-```bash
-pytest
-```
+   ```bash
+   pytest
+   ```
 
 ## 📚 Example Usage
 
 ```python
-from src.algebra.relation import Relation
+from Math.core.relation import Relation
+from Math.core.function import Function
 
-r = Relation([(1, 2), (2, 3), (1, 2)])
-print(r.pairs)   # set of unique pairs
-print(r.domain)  # set of unique inputs
-print(r.range)   # set of unique outputs
+# Example: Building a function from discrete points with an optional lambda rule to evaluate with
+f = Function([(x, x**2) for x in range(-5, 6)], Optional(rule=lambda x: x**2))
+print(f.domain) # {-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5}
+print(f.range)  # {0, 1, 4, 9, 16, 25}
+print(f(3))     # 9
+print(f(-3))    # 9
+
+# Inverse (returns a Relation - may not be a function!)
+print(f.inverse.pairs)
 ```
+
+## 🗺️ Roadmap (Long-Term) 
+
+### Mathematics & Computer Science  
+- [✅] Relations
+- [x] Functions (precalculus foundations)
+- [ ] Transformations, symmetry, monotonicity
+- [ ] Calculus (limits, derivatives, integrals — from definition)
+- [ ] Linear Algebra (vectors, matrices, spaces, transformations)
+- [ ] Discrete Math (graphs, logic, set theory, combinatorics)
+- [ ] Probability & Statistics
+
+### Physics & Cosmology
+- [ ] Physics (mechanics, E&M, relativity)
+- [ ] Astrophysics & Cosmology models
+
+### Biology
+- [ ] Biology (genetics, evolution, systems)
+
+### Chemistry
+- [ ] Atomic & Molecular Basics (Atom/Molecule classes, molar mass, formulas)
+- [ ] Stoichiometry & Chemical Reactions (balancing equations, limiting reagents)
+- [ ] Thermodynamics (ideal gas law, enthalpy, phase changes)
+- [ ] Kinetics (rate laws, reaction orders, numerical integration)
+- [ ] Equilibrium (K constants, acid-base pH, Le Chatelier)
+- [ ] Quantum Basics (particle in a box, wavefunctions, energy levels)
+- [ ] Organic Chemistry Tools (SMILES parsing, structural isomers)
+- [ ] Spectroscopy & Data Analysis (simulated spectra, peak fitting)
+
+### History
+- [ ] Timeline Engine (Event & Timeline classes, date handling)
+- [ ] Historical Periods & Eras (overlapping timelines, Gantt-style views)
+- [ ] Event Networks & Causality (influence graphs)
+- [ ] Sources & Historiography (primary/secondary modeling, bias tracking)
+- [ ] Geospatial History (events on maps)
+- [ ] Quantitative History (cliometrics: population, trade, war data analysis)
+- [ ] Narrative Tools (text extraction, sentiment over time)
+- [ ] Counterfactual Modeling (simple "what-if" simulations)
+
+- [ ] And eventually... everything else worth knowing deeply
 
 ## 🛠️ Contributing
 
-- Open issues for ideas, bugs, or requests.
-- Add focused unit tests for new features or behaviors.
-- Keep commits small, descriptive, and educational.
+This is primarily a personal learning journey, but:
+
+- Issues and discussions welcome for feedback or questions.
+- PRs considered if they add educational clarity or fix bugs.
+- Priority: readability, tests, mathematical accuracy.
 
 ## 📝 License
 
-Add a license of your choice (e.g., MIT). Replace this line with your preferred license.
+MIT License--fork, adapt, learn from freely.
 
 ---
 
-**This project is a journey — not just a codebase.**  
-If you’re learning math or CS, feel free to fork, watch, or contribute!
+**This isn't just code. It's how I'm building my mind - one implementation at a time.**  
+Watching, forking, or following along on the journey? All appreciated. 🚀
