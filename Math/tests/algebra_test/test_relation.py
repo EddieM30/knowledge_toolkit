@@ -225,7 +225,7 @@ def test_inverse_relation_is_function():
     pairs = [(1, 3), (2, 4), (3, 5), (4, 6)]
     rel = Relation(pairs)
 
-    assert rel.inverse.is_function == True
+    assert rel.inverse.is_function is True
 
 
 def test_inverse_relation_is_not_function():

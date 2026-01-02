@@ -89,14 +89,25 @@ class Function(Relation):
             Function: The composed function f(g(x))."""
         return Function(pairs=self.pairs, rule=lambda x: self(other(x)))
 
-    def func_arithmetic(self, operand, g):
-        """
-        Perform an arithmetic operation with another function g (not implemented).
+    def __add__(self, other):
+        if not isinstance(other, Function):
+            return NotImplemented
+        return Function(rule=lambda x: self(x) + other(x))
 
-        Args:
-            operand (str): The arithmetic operation ('+', '-', '*', '/').
-            g (Function): The other function.
-        """
+    def __sub__(self, other):
+        if not isinstance(other, Function):
+            return NotImplemented
+        return Function(rule=lambda x: self(x) - other(x))
+
+    def __mul__(self, other):
+        if not isinstance(other, Function):
+            return NotImplemented
+        return Function(rule=lambda x: self(x) * other(x))
+
+    def __truediv__(self, other):
+        if not isinstance(other, Function):
+            return NotImplemented
+        return Function(rule=lambda x: self(x) / other(x))
 
     def vertical_shift(self, k):
         """
