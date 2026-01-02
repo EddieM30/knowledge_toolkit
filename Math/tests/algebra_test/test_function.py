@@ -7,17 +7,28 @@ non_function_rel = Relation([(1, 2), (2, 3), (1, 5)])
 
 
 def test_is_function_on_instantiation():
+    """
+    Test that a Function instantiated with a functional Relation
+    is recognized as a function (passes the vertical line test).
+    """
 
     func = Function(functional_rel)
-    assert func.is_function is True
+    assert func.relation.is_function is True
 
 
 def test_is_not_function_on_instantiation():
+    """
+        Test that a Function instantiated with a non-functional Relation
+        is not recognized as a function (fails the vertical line test).
+        """
     func = Function(non_function_rel)
-    assert func.is_function is False
+    assert func.relation.is_function is False
 
 
 def test_rule_evaluation():
+    """
+        Test that a Function with a rule evaluates correctly for given inputs.
+        """
     f = Function(relation=functional_rel, rule=lambda x: x**2)
 
     assert f(4) == 16

@@ -1,10 +1,23 @@
+"""
+functions.py
+
+Defines the Function class and related utilities for representing and manipulating mathematical functions.
+
+This module provides:
+- The Function class, which extends the Relation class to enforce the function property (each x maps to exactly one y).
+- Methods for evaluating, transforming, and analyzing mathematical functions.
+- Support for function composition, reflection, and other algebraic operations.
+
+Intended for use in symbolic mathematics, algebraic manipulation, and educational tools.
+"""
+from typing import Optional, Callable, Any
 from .relation import Relation
 
 
 class Function:
     """Represents a mathematical function, built on a Relation, with optional transformation rules and analysis methods."""
 
-    def __init__(self, relation, rule=None):
+    def __init__(self, relation: Relation, rule: Optional[Callable] = None):
         """
         Initialize a Function object.
 
@@ -12,15 +25,17 @@ class Function:
             relation (Relation): The underlying relation representing the function.
             rule (callable, optional): A callable rule for evaluating the function. Defaults to None.
         """
+        if not relation.is_function:
+            raise ValueError("Relation is not a function")
+
         self.relation = relation
-        self.is_function = relation.is_function
         self.rule = rule
         self._symmetry_type = None
         self._intervals_of_increase = None
         self._intervals_of_decrease = None
         self._monotonicity = None
 
-    def __call__(self, x):
+    def __call__(self, x: Any):
         """
         Evaluate the function at a given input x.
 
@@ -31,10 +46,11 @@ class Function:
         """
         if self.rule:
             return self.rule(x)
-        return self.relation.get_value_from(x)
+        return self.relation.get_value_for(x)
 
     @property
     def return_symmetry_type(self):
+        """Returns attribute of symmetry type from object"""
         return self._symmetry_type
 
     @staticmethod
@@ -65,16 +81,13 @@ class Function:
         return Function(relation=Relation([(x, c) for x in range(range_start, range_end)]), rule=lambda x: c)
 
     def compose(self, other):
-        """
-        Return the composition of this function with another function.
+        """Return the composition of this function with another function.
 
         Args:
             other (Function): The inner function to compose with.
         Returns:
-            Function: The composed function $f(g(x))$.
-        """
-        def h(x): return self(other(x))
-        return Function(relation=self.relation, rule=h)
+            Function: The composed function f(g(x))."""
+        return Function(relation=self.relation, rule=lambda x: self(other(x)))
 
     def func_arithmetic(self, operand, g):
         """
@@ -84,7 +97,6 @@ class Function:
             operand (str): The arithmetic operation ('+', '-', '*', '/').
             g (Function): The other function.
         """
-        pass
 
     def vertical_shift(self, k):
         """
@@ -130,7 +142,7 @@ class Function:
         """
         return Function(relation=self.relation, rule=lambda x: self(x * b))
 
-    def reflect_over_x_axis(self):
+    def reflect_over_x_axis(self) -> 'Function':
         """
         Return a new Function reflected over the x-axis.
 
@@ -139,7 +151,7 @@ class Function:
         """
         return Function(relation=self.relation, rule=lambda x: -self(x))
 
-    def reflect_over_y_axis(self):
+    def reflect_over_y_axis(self) -> "Function":
         """
         Return a new Function reflected over the y-axis.
 
@@ -148,7 +160,7 @@ class Function:
         """
         return Function(relation=self.relation, rule=lambda x: self(-x))
 
-    def check_symmetry(self):
+    def check_symmetry(self) -> None:
         """
         Check and set self._symmerty_type whether the function is even, odd, or neither.
         Compares f(x) to f(-x) and -f(x) for all x in the domain.
@@ -165,31 +177,26 @@ class Function:
         """
         Return intervals where the function is increasing (not implemented).
         """
-        pass
 
     def intervals_of_decrease(self):
         """
         Return intervals where the function is decreasing (not implemented).
         """
-        pass
 
     def is_increasing(self):
         """
         Check if the function is increasing (not implemented).
         """
-        pass
 
     def is_decreasing(self):
         """
         Check if the function is decreasing (not implemented).
         """
-        pass
 
     def is_constant(self):
         """
         Check if the function is constant (not implemented).
         """
-        pass
 
     def symmetry_type(self):
         """
