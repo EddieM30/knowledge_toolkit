@@ -40,6 +40,41 @@ This is my living implementation journal: theorems proven, algorithms built, mod
    pip install -r requirements-dev.txt  # or: pip install pytest
    ```
 
+## 📂 Project Structure
+
+knowledge_toolkit/
+├── .gitignore
+├── pytest.ini
+├── README.md
+├── testing.py
+│
+├── Math/
+│   ├── core/
+│   │   ├── init.py
+│   │   ├── relation.py          # Core Relation class (sets of ordered pairs)
+│   │   └── functions.py         # Function class and foundations
+│   │
+│   ├── algebra/
+│   │   ├── init.py
+│   │   ├── exponential.py
+│   │   ├── linear.py
+│   │   ├── logarithmic.py
+│   │   ├── polynomials.py
+│   │   ├── quadratics.py
+│   │   ├── rational.py
+│   │   ├── systems.py
+│   │   └── utils.py
+│   │
+│   └── tests/
+│       └── algebra_test/
+│           ├── test_function.py
+│           └── test_relation.py
+│
+├── Biology/                         # Future: genetics, evolution, systems biology
+├── History/                         # Future: timelines, event networks, cliometrics
+└── physics/                         # Future: mechanics, E&M, relativity
+
+
 ## 🧪 Running Tests
 
    ```bash
