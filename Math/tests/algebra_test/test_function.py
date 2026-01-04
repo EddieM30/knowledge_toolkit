@@ -107,3 +107,72 @@ def test_check_symmetry_is_neither():
     f.check_symmetry()
 
     assert f.return_symmetry_type == 'neither'
+
+
+def test_interval_increase():
+    increasing_pairs = [(1, 2), (2, 4), (3, 6), (4, 8)]
+    f = Function(pairs=increasing_pairs)
+    # Happy path: strictly increasing
+    assert f.intervals_of_increase() == [(1, 2), (2, 3), (3, 4)]
+    assert f._merge_intervals(f.intervals_of_increase()) == [(1, 4)]
+
+
+def test_interval_decrease():
+    decreasing_pairs = [(1, 8), (2, 6), (3, 4), (4, 2)]
+    f = Function(pairs=decreasing_pairs)
+    # Happy path: strictly decreasing
+    assert f.intervals_of_decrease() == [(1, 2), (2, 3), (3, 4)]
+    assert f._merge_intervals(f.intervals_of_decrease()) == [(1, 4)]
+
+
+def test_interval_constant():
+    constant_pairs = [(1, 5), (2, 5), (3, 5), (4, 5)]
+    f = Function(pairs=constant_pairs)
+    # Happy path: constant
+    assert f.intervals_are_constant() == [(1, 2), (2, 3), (3, 4)]
+    assert f._merge_intervals(f.intervals_are_constant()) == [(1, 4)]
+
+
+def test_merge_overlapping_and_non_overlapping():
+    pairs = [
+        (1, 5), (4, 8), (7, 10), (9, 12),  # overlapping
+        (13, 15), (16, 18),  # non-overlapping
+        (20, 22), (23, 25),  # non-overlapping
+        (26, 30), (28, 32)  # overlapping
+    ]
+    f = Function(pairs=pairs)
+    intervals = [(1, 5), (4, 8), (7, 10), (9, 12), (13, 15),
+                 (16, 18), (20, 22), (23, 25), (26, 30), (28, 32)]
+    merged = f._merge_intervals(sorted(intervals))
+    assert merged == [(1, 12), (13, 15), (16, 18),
+                      (20, 22), (23, 25), (26, 32)]
+
+
+def test_merge_adjacent():
+    pairs = [(1, 3), (3, 5), (5, 7), (8, 10)]
+    f = Function(pairs=pairs)
+    intervals = [(1, 3), (3, 5), (5, 7), (8, 10)]
+    merged = f._merge_intervals(sorted(intervals))
+    assert merged == [(1, 7), (8, 10)]
+
+
+def test_merge_empty_and_single():
+    f = Function(pairs=[])
+    assert f._merge_intervals([]) == []
+    single = [(2, 4)]
+    # Only one interval, nothing to merge
+    assert f._merge_intervals(single) == [(2, 4)]
+
+
+def test_merge_same_start_end():
+
+    f = Function(pairs=[(1, 3), (3, 5), (5, 7)])
+    sorted_intervals = sorted(f.pairs)
+    assert sorted_intervals == [(1, 3), (3, 5), (5, 7)]
+    assert f._merge_intervals(sorted_intervals) == [(1, 7)]
+
+
+def test_invalid_function_instantiation():
+    # Not a function: duplicate x with different y
+    with pytest.raises(ValueError):
+        Function(pairs=[(1, 2), (1, 3)])

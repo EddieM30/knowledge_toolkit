@@ -10,7 +10,7 @@ This module provides:
 
 Intended for use in symbolic mathematics, algebraic manipulation, and educational tools.
 """
-from typing import Optional, Callable, Any
+from typing import Optional, Callable, Any, List, Tuple
 from .relation import Relation
 
 
@@ -33,6 +33,7 @@ class Function(Relation):
         self._symmetry_type = None
         self._intervals_of_increase = None
         self._intervals_of_decrease = None
+        self._intervals_of_constant = None
         self._monotonicity = None
 
     def __call__(self, x: Any):
@@ -184,15 +185,78 @@ class Function(Relation):
         else:
             self._symmetry_type = 'neither'
 
+    def symmetry_type(self):
+        """
+        Return the symmetry type of the function (not implemented).
+        """
+        return self._symmetry_type
+
     def intervals_of_increase(self):
         """
-        Return intervals where the function is increasing (not implemented).
+        Return intervals where the function is increasing.
         """
+
+        x = [pair[0] for pair in sorted(self.pairs)]
+        y = [pair[1] for pair in sorted(self.pairs)]
+        intervals_of_increase = []
+        for (x0, y0), (x1, y1) in zip(zip(x, y), zip(x[1:], y[1:])):
+            print(y0, y1)
+            if y0 < y1:
+
+                intervals_of_increase.append((x0, x1))
+        self._intervals_of_increase = intervals_of_increase
+        return sorted(intervals_of_increase)
 
     def intervals_of_decrease(self):
         """
         Return intervals where the function is decreasing (not implemented).
         """
+        x = [pair[0] for pair in sorted(self.pairs)]
+        y = [pair[1] for pair in sorted(self.pairs)]
+        intervals_of_decrease = []
+        for (x0, y0), (x1, y1) in zip(zip(x, y), zip(x[1:], y[1:])):
+            if y0 > y1:
+                intervals_of_decrease.append((x0, x1))
+        self._intervals_of_increase = intervals_of_decrease
+        return sorted(intervals_of_decrease)
+
+    def intervals_are_constant(self):
+        x = [pair[0] for pair in sorted(self.pairs)]
+        y = [pair[1] for pair in sorted(self.pairs)]
+        intervals_of_constant = []
+        for (x0, y0), (x1, y1) in zip(zip(x, y), zip(x[1:], y[1:])):
+            if y0 == y1:
+                intervals_of_constant.append((x0, x1))
+        self._intervals_of_increase = intervals_of_constant
+        return sorted(intervals_of_constant)
+
+    def _merge_intervals(self, pairs):
+        """Takes list of pairs and merges overlaping pairs
+
+        Returns:
+            List of merged pairs."""
+
+        if pairs == []:
+            return []
+        if len(pairs) == 1:
+            return pairs
+        sorted_pairs = sorted(pairs)
+        merged = []
+        curr_pair = sorted_pairs[0]
+        for pair in sorted_pairs:
+            if curr_pair == pair:
+                continue
+            if curr_pair[1] >= pair[0]:
+                curr_pair = (curr_pair[0], pair[1])
+                if pair == sorted_pairs[-1]:
+                    merged.append(curr_pair)
+            elif curr_pair[1] < pair[0]:
+                merged.append(curr_pair)
+                if pair == sorted_pairs[-1]:
+                    merged.append(pair)
+                curr_pair = pair
+
+        return list(merged)
 
     def is_increasing(self):
         """
@@ -208,12 +272,6 @@ class Function(Relation):
         """
         Check if the function is constant (not implemented).
         """
-
-    def symmetry_type(self):
-        """
-        Return the symmetry type of the function (not implemented).
-        """
-        return True
 
     # is_bounded
     # is_bounded_above
