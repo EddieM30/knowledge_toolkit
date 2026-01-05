@@ -174,7 +174,7 @@ class Function(Relation):
 
     def check_symmetry(self) -> None:
         """
-        Check and set self._symmerty_type whether the function is even, odd, or neither.
+        Check and set self._symmetry_type whether the function is even, odd, or neither.
         Compares f(x) to f(-x) and -f(x) for all x in the domain.
         """
 
@@ -200,9 +200,7 @@ class Function(Relation):
         y = [pair[1] for pair in sorted(self.pairs)]
         intervals_of_increase = []
         for (x0, y0), (x1, y1) in zip(zip(x, y), zip(x[1:], y[1:])):
-            print(y0, y1)
             if y0 < y1:
-
                 intervals_of_increase.append((x0, x1))
         self._intervals_of_increase = intervals_of_increase
         return sorted(intervals_of_increase)
@@ -217,7 +215,7 @@ class Function(Relation):
         for (x0, y0), (x1, y1) in zip(zip(x, y), zip(x[1:], y[1:])):
             if y0 > y1:
                 intervals_of_decrease.append((x0, x1))
-        self._intervals_of_increase = intervals_of_decrease
+        self._intervals_of_decrease = intervals_of_decrease
         return sorted(intervals_of_decrease)
 
     def intervals_are_constant(self):
@@ -227,7 +225,7 @@ class Function(Relation):
         for (x0, y0), (x1, y1) in zip(zip(x, y), zip(x[1:], y[1:])):
             if y0 == y1:
                 intervals_of_constant.append((x0, x1))
-        self._intervals_of_increase = intervals_of_constant
+        self._intervals_of_constant = intervals_of_constant
         return sorted(intervals_of_constant)
 
     def _merge_intervals(self, pairs):

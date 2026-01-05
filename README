@@ -57,7 +57,7 @@ knowledge_toolkit/
 │   ├── algebra/
 │   │   ├── init.py
 │   │   ├── exponential.py
-│   │   ├── linear.py
+│   │   ├── linearFunction.py
 │   │   ├── logarithmic.py
 │   │   ├── polynomials.py
 │   │   ├── quadratics.py
